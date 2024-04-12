@@ -2,7 +2,7 @@
 apiVersion: charts.kubealex.com/v1
 kind: K8SMediaserver
 metadata:
-  name: Mediaserver
+  name: mediaserver
 spec:
   # Default values copied from <project_dir>/helm-charts/k8s-mediaserver/values.yaml
   general:
