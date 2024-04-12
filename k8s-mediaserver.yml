@@ -29,7 +29,7 @@ spec:
         transmission: transmission
         sabnzbd: sabnzbd
         config: config
-      volumes: {}
+      volumes:
         hostPath:
           path: /mnt/sda/data/mediaserver/
     ingress:
