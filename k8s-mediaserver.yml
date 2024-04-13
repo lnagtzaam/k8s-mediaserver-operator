@@ -72,6 +72,7 @@ persistentVolumeClaim:
           storage: 5Gi
 
 
+
   radarr:
     enabled: true
     container:
