@@ -57,12 +57,14 @@ sonarr:
       secretName: ""
   resources: {}
   volume:
-    - name: sonarr-config
+    - {}
+      name: sonarr-config
       persistentVolumeClaim:
         claimName: pvc-sonarr-config
 
 persistentVolumeClaim:
-  - name: pvc-sonarr-config
+  - {}
+    name: pvc-sonarr-config
     spec:
       storageClassName: nfs-storage
       accessModes:
