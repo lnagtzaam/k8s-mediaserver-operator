@@ -20,7 +20,7 @@ spec:
       accessMode: ""
       pvcName: mediaserver-pvc
       size: 5Gi
-      pvcStorageClass: "local-path"
+      pvcStorageClass: "nfs-storage"
       # the path starting from the top level of the pv you're passing. If your share is server.local/share/, then tv is server.local/share/media/tv
       subPaths:
         tv: media/tv
@@ -31,43 +31,46 @@ spec:
         config: config
       volumes:
         hostPath:
-          path: /mnt/sda/data/mediaserver/
+          path: /mediaserver/
     ingress:
       ingressClassName: ""
     nodeSelector: {}
 
   sonarr:
-    enabled: true
-    container:
-      image: docker.io/linuxserver/sonarr
-      nodeSelector: {}
-      port: 8989
-    service:
-      type: ClusterIP
-      port: 8989
-      nodePort:
-      extraLBService: true
-      extraLBAnnotations: {}
-      # Defines an additional LB service, requires cloud provider service or MetalLB
-    ingress:
+  enabled: true
+  container:
+    image: docker.io/linuxserver/sonarr
+    nodeSelector: {}
+    port: 8989
+  service:
+    type: ClusterIP
+    port: 8989
+    nodePort:
+    extraLBService: true
+    extraLBAnnotations: {}
+  ingress:
+    enabled: false
+    annotations: {}
+    path: /sonarr
+    tls:
       enabled: false
-      annotations: {}
-      path: /sonarr
-      tls:
-        enabled: false
-        secretName: ""
-    resources: {}
-    volume:
-      {}
-      #name: pvc-sonarr-config
-      #storageClassName: longhorn
-      #annotations:
-      #  my-annotation/test: my-value
-      #labels:
-      #  my-label/test: my-other-value
-      #accessModes: ReadWriteOnce
-      #storage: 5Gi
-      #selector: {}
+      secretName: ""
+  resources: {}
+  volume:
+    - name: sonarr-config
+      persistentVolumeClaim:
+        claimName: pvc-sonarr-config
+        
+persistentVolumeClaim:
+  - name: pvc-sonarr-config
+    spec:
+      storageClassName: nfs-storage
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 5Gi
+
 
   radarr:
     enabled: true
