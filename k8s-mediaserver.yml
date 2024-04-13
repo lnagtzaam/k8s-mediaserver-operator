@@ -57,8 +57,7 @@ sonarr:
       secretName: ""
   resources: {}
   volume:
-    - {}
-      name: sonarr-config
+    - name: sonarr-config
       persistentVolumeClaim:
         claimName: pvc-sonarr-config
 
@@ -71,6 +70,7 @@ persistentVolumeClaim:
       resources:
         requests:
           storage: 5Gi
+
 
 radarr:
   enabled: true
