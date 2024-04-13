@@ -36,7 +36,7 @@ spec:
       ingressClassName: ""
     nodeSelector: {}
 
-  sonarr:
+sonarr:
   enabled: true
   container:
     image: docker.io/linuxserver/sonarr
@@ -45,7 +45,7 @@ spec:
   service:
     type: ClusterIP
     port: 8989
-    nodePort:
+    nodePort: null
     extraLBService: true
     extraLBAnnotations: {}
   ingress:
@@ -60,7 +60,7 @@ spec:
     - name: sonarr-config
       persistentVolumeClaim:
         claimName: pvc-sonarr-config
-        
+
 persistentVolumeClaim:
   - name: pvc-sonarr-config
     spec:
